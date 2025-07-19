@@ -185,18 +185,22 @@ const CourseCatalog = () => {
                   </div>
                 </div>
                 
-                <Button className="w-full bg-gradient-primary hover:opacity-90 transition-opacity">
-                  Ver Curso
-                </Button>
+                <a href="/courses">
+                  <Button className="w-full bg-gradient-primary hover:opacity-90 transition-opacity">
+                    Ver Curso
+                  </Button>
+                </a>
               </CardContent>
             </Card>
           ))}
         </div>
         
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="hover:bg-primary hover:text-primary-foreground">
-            Ver Todos los Cursos
-          </Button>
+          <a href="/courses">
+            <Button variant="outline" size="lg" className="hover:bg-primary hover:text-primary-foreground">
+              Ver Todos los Cursos
+            </Button>
+          </a>
         </div>
       </div>
     </section>
