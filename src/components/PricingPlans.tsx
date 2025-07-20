@@ -2,70 +2,39 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Star, Zap, Crown } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const plans = [
   {
-    name: "Básico",
+    id: "monthly",
+    name: "Plan Mensual",
     description: "Perfecto para comenzar tu viaje de aprendizaje",
-    monthlyPrice: 9.99,
-    annualPrice: 99.99,
+    price: 29,
+    period: "/mes",
     icon: Star,
     popular: false,
     features: [
-      "Acceso a 100+ cursos básicos",
+      "Acceso a todos los cursos",
       "Certificados de finalización",
-      "Soporte por email",
-      "Acceso móvil",
-      "Contenido en español",
-      "Foros de comunidad"
-    ],
-    limitations: [
-      "Sin cursos premium",
-      "Sin mentoría 1:1",
-      "Sin acceso offline"
+      "Soporte prioritario"
     ]
   },
   {
-    name: "Premium",
+    id: "annual",
+    name: "Plan Anual",
     description: "La opción más popular para profesionales",
-    monthlyPrice: 24.99,
-    annualPrice: 249.99,
+    price: 290,
+    originalPrice: 348,
+    period: "/año",
+    savings: "17% de descuento",
     icon: Zap,
     popular: true,
     features: [
-      "Acceso completo a 1000+ cursos",
-      "Cursos premium y especializados",
-      "Proyectos prácticos",
-      "Certificados verificados",
+      "Acceso a todos los cursos",
+      "Certificados de finalización", 
       "Soporte prioritario",
-      "Acceso offline",
-      "Nuevos cursos cada semana",
-      "Evaluaciones y quizzes",
-      "Foros exclusivos"
-    ],
-    limitations: [
-      "Sin mentoría 1:1 ilimitada"
+      "Contenido exclusivo"
     ]
-  },
-  {
-    name: "Empresarial",
-    description: "Soluciones completas para equipos y empresas",
-    monthlyPrice: 49.99,
-    annualPrice: 499.99,
-    icon: Crown,
-    popular: false,
-    features: [
-      "Todo lo de Premium",
-      "Mentoría 1:1 ilimitada",
-      "Rutas de aprendizaje personalizadas",
-      "Dashboard de progreso avanzado",
-      "Integración con herramientas empresariales",
-      "Soporte dedicado 24/7",
-      "Cursos personalizados para empresa",
-      "Análisis de progreso del equipo",
-      "Onboarding especializado"
-    ],
-    limitations: []
   }
 ];
 
@@ -102,7 +71,7 @@ const PricingPlans = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {plans.map((plan, index) => {
             const IconComponent = plan.icon;
             return (
@@ -138,27 +107,36 @@ const PricingPlans = () => {
                   <div className="mt-6">
                     <div className="flex items-baseline justify-center">
                       <span className="text-4xl font-bold text-foreground">
-                        €{plan.monthlyPrice}
+                        €{plan.price}
                       </span>
-                      <span className="text-muted-foreground ml-1">/mes</span>
+                      <span className="text-muted-foreground ml-1">{plan.period}</span>
                     </div>
-                    <div className="text-sm text-muted-foreground mt-2">
-                      o €{plan.annualPrice}/año (ahorra {Math.round((1 - plan.annualPrice / (plan.monthlyPrice * 12)) * 100)}%)
-                    </div>
+                    {'savings' in plan && plan.savings && (
+                      <Badge variant="secondary" className="mt-2">
+                        {plan.savings}
+                      </Badge>
+                    )}
+                    {'originalPrice' in plan && plan.originalPrice && (
+                      <div className="text-sm text-muted-foreground mt-2 line-through">
+                        €{plan.originalPrice}/año
+                      </div>
+                    )}
                   </div>
                 </CardHeader>
                 
                 <CardContent className="px-6 pb-6">
-                  <Button 
-                    className={`w-full mb-6 ${
-                      plan.popular 
-                        ? 'bg-gradient-primary hover:opacity-90' 
-                        : 'bg-primary hover:bg-primary/90'
-                    }`}
-                    size="lg"
-                  >
-                    {plan.name === 'Básico' ? 'Comenzar Gratis' : 'Comenzar Ahora'}
-                  </Button>
+                  <Link to={`/checkout?plan=${plan.id}`}>
+                    <Button 
+                      className={`w-full mb-6 ${
+                        plan.popular 
+                          ? 'bg-gradient-primary hover:opacity-90' 
+                          : 'bg-primary hover:bg-primary/90'
+                      }`}
+                      size="lg"
+                    >
+                      Comenzar Ahora
+                    </Button>
+                  </Link>
                   
                   <div className="space-y-4">
                     <div>
@@ -172,24 +150,6 @@ const PricingPlans = () => {
                         ))}
                       </ul>
                     </div>
-                    
-                    {plan.limitations.length > 0 && (
-                      <div className="pt-4 border-t border-border">
-                        <h4 className="font-semibold text-muted-foreground mb-3 text-sm">
-                          No incluye:
-                        </h4>
-                        <ul className="space-y-2">
-                          {plan.limitations.map((limitation) => (
-                            <li key={limitation} className="flex items-start space-x-2">
-                              <div className="w-5 h-5 flex items-center justify-center mt-0.5">
-                                <div className="w-2 h-2 bg-muted-foreground rounded-full"></div>
-                              </div>
-                              <span className="text-sm text-muted-foreground">{limitation}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
                   </div>
                 </CardContent>
               </Card>
