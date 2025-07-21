@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Menu, Search, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -18,18 +19,18 @@ const Header = () => {
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="/courses" className="text-foreground hover:text-primary transition-colors">
+            <Link to="/courses" className="text-foreground hover:text-primary transition-colors">
               Cursos
-            </a>
-            <a href="/dashboard" className="text-foreground hover:text-primary transition-colors">
+            </Link>
+            <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
               Dashboard
-            </a>
-            <a href="#planes" className="text-foreground hover:text-primary transition-colors">
-              Planes
-            </a>
-            <a href="#nosotros" className="text-foreground hover:text-primary transition-colors">
-              Nosotros
-            </a>
+            </Link>
+            <Link to="/subscription" className="text-foreground hover:text-primary transition-colors">
+              Suscripción
+            </Link>
+            <Link to="/profile" className="text-foreground hover:text-primary transition-colors">
+              Perfil
+            </Link>
             <a href="#contacto" className="text-foreground hover:text-primary transition-colors">
               Contacto
             </a>
