@@ -1,8 +1,31 @@
 import { Button } from "@/components/ui/button";
-import { GraduationCap, Menu, Search, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { GraduationCap, Menu, Search, User, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Header = () => {
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    toast({
+      title: "Sesión cerrada",
+      description: "Has cerrado sesión correctamente.",
+    });
+    navigate("/");
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4 py-4">
@@ -48,14 +71,37 @@ const Header = () => {
               </div>
             </div>
             
-            <Button variant="outline" size="sm" className="hidden md:flex items-center space-x-2">
-              <User className="h-4 w-4" />
-              <span>Iniciar Sesión</span>
-            </Button>
-            
-            <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity">
-              Comenzar Gratis
-            </Button>
+            {user ? (
+              <div className="hidden md:flex items-center space-x-3">
+                <span className="text-sm text-muted-foreground">
+                  Hola, {user.name}
+                </span>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleLogout}
+                  className="flex items-center space-x-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Salir</span>
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="outline" size="sm" className="hidden md:flex items-center space-x-2">
+                    <User className="h-4 w-4" />
+                    <span>Iniciar Sesión</span>
+                  </Button>
+                </Link>
+                
+                <Link to="/register">
+                  <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity">
+                    Comenzar Gratis
+                  </Button>
+                </Link>
+              </>
+            )}
             
             <Button variant="ghost" size="sm" className="md:hidden">
               <Menu className="h-5 w-5" />
