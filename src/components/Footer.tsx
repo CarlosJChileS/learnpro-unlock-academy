@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <footer className="bg-foreground text-background py-16">
+    <footer className="bg-muted/30 border-t border-border py-16">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
@@ -12,13 +12,13 @@ const Footer = () => {
               <div className="p-2 bg-gradient-primary rounded-lg">
                 <GraduationCap className="h-6 w-6 text-white" />
               </div>
-              <span className="text-2xl font-bold">LearnPro</span>
+              <span className="text-2xl font-bold text-gradient">LearnPro</span>
             </div>
-            <p className="text-background/80 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
               La plataforma líder en educación online que transforma carreras profesionales a través del aprendizaje especializado.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="text-background hover:bg-background/10">
+              <Button variant="outline" size="sm" className="hover-scale">
                 <Facebook className="h-5 w-5" />
               </Button>
               <Button variant="ghost" size="sm" className="text-background hover:bg-background/10">
