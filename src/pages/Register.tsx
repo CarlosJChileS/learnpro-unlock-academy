@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { GraduationCap, Eye, EyeOff, CheckCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -63,23 +64,27 @@ const Register = () => {
 
     setIsLoading(true);
 
-    // Simulación de registro - en una app real esto conectaría a tu backend
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simular delay
-
-      // Simulamos registro exitoso
-      localStorage.setItem("user", JSON.stringify({ 
-        email: formData.email, 
-        name: formData.name,
-        isAuthenticated: true 
-      }));
-      
-      toast({
-        title: "¡Cuenta creada exitosamente!",
-        description: "Bienvenido a LearnPro. Tu cuenta ha sido creada.",
+      const { error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            name: formData.name,
+          },
+          emailRedirectTo: `${window.location.origin}/`
+        }
       });
-      
-      navigate("/dashboard");
+
+      if (error) {
+        setError(error.message);
+      } else {
+        toast({
+          title: "¡Cuenta creada exitosamente!",
+          description: "Bienvenido a LearnPro. Tu cuenta ha sido creada.",
+        });
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError("Error al crear la cuenta. Inténtalo de nuevo.");
     } finally {
