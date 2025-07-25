@@ -8,7 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { User, Mail, Calendar, Award, BookOpen, Trophy, Camera } from "lucide-react";
+import { User, Mail, Calendar, Award, BookOpen, Trophy, Camera, Star, Clock, Target, Settings } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -46,8 +48,10 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5 pt-20">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main className="container mx-auto px-4 py-8 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Sidebar */}
           <div className="lg:col-span-1">
@@ -354,7 +358,9 @@ export default function Profile() {
             </Tabs>
           </div>
         </div>
-      </div>
+      </main>
+      
+      <Footer />
     </div>
   );
 }

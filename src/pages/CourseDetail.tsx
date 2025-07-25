@@ -9,11 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Clock, Users, Star, ChevronLeft, Play, FileText, Award, 
   BookOpen, Target, CheckCircle2, Lock, ChevronRight, Menu,
   ThumbsUp, MessageCircle, Share2, Download, MoreVertical,
-  Bookmark
+  Bookmark, Volume2, Settings
 } from "lucide-react";
 
 const courseData = {
@@ -91,10 +92,13 @@ const courseData = {
 
 const CourseDetail = () => {
   const { id } = useParams();
+  const { toast } = useToast();
   const [currentLesson, setCurrentLesson] = useState(0);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const course = courseData[Number(id) as keyof typeof courseData];
 
   if (!course) {
@@ -120,9 +124,20 @@ const CourseDetail = () => {
 
   const handleSubmitComment = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí se enviaría el comentario
-    console.log("Comentario enviado:", { comment, rating });
-    setComment("");
+    if (comment.trim()) {
+      toast({
+        title: "Comentario enviado",
+        description: "Gracias por tu feedback sobre esta lección."
+      });
+      setComment("");
+    }
+  };
+
+  const markLessonComplete = () => {
+    toast({
+      title: "¡Lección completada!",
+      description: "Has marcado esta lección como completada. ¡Sigue así!"
+    });
   };
 
   return (
@@ -232,8 +247,21 @@ const CourseDetail = () => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <Button size="lg" className="bg-white/20 border-white/50 text-white hover:bg-white/30">
-                      <Play className="h-8 w-8" />
+                    <Button 
+                      size="lg" 
+                      className="bg-white/20 border-white/50 text-white hover:bg-white/30"
+                      onClick={() => setIsPlaying(!isPlaying)}
+                    >
+                      {isPlaying ? (
+                        <div className="h-8 w-8 flex items-center justify-center">
+                          <div className="flex space-x-1">
+                            <div className="w-1 h-6 bg-white"></div>
+                            <div className="w-1 h-6 bg-white"></div>
+                          </div>
+                        </div>
+                      ) : (
+                        <Play className="h-8 w-8" />
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -252,7 +280,13 @@ const CourseDetail = () => {
                       </Button>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm">Velocidad: 1x</span>
+                      <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
+                        <Volume2 className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
+                        <Settings className="h-4 w-4" />
+                      </Button>
+                      <span className="text-sm">Velocidad: {playbackSpeed}x</span>
                       <span className="text-sm">HD</span>
                     </div>
                   </div>
@@ -356,20 +390,30 @@ const CourseDetail = () => {
                     </CardContent>
                   </Card>
 
-                  {/* Navigation */}
-                  <div className="flex items-center justify-between pt-4 border-t border-border">
-                    <Button variant="outline" disabled={currentLesson === 0}>
-                      <ChevronLeft className="h-4 w-4 mr-2" />
-                      Lección anterior
-                    </Button>
-                    <Button 
-                      onClick={() => setCurrentLesson(Math.min(currentLesson + 1, totalLessons - 1))}
-                      disabled={currentLesson === totalLessons - 1}
-                    >
-                      Siguiente lección
-                      <ChevronRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  </div>
+                   {/* Navigation */}
+                   <div className="flex items-center justify-between pt-4 border-t border-border">
+                     <Button variant="outline" disabled={currentLesson === 0}>
+                       <ChevronLeft className="h-4 w-4 mr-2" />
+                       Lección anterior
+                     </Button>
+                     
+                     <div className="flex items-center space-x-2">
+                       <Button 
+                         variant="secondary"
+                         onClick={markLessonComplete}
+                       >
+                         <CheckCircle2 className="h-4 w-4 mr-2" />
+                         Completar lección
+                       </Button>
+                       <Button 
+                         onClick={() => setCurrentLesson(Math.min(currentLesson + 1, totalLessons - 1))}
+                         disabled={currentLesson === totalLessons - 1}
+                       >
+                         Siguiente lección
+                         <ChevronRight className="h-4 w-4 ml-2" />
+                       </Button>
+                     </div>
+                   </div>
                 </div>
               </div>
             </div>
