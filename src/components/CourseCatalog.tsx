@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Users, Star, Play } from "lucide-react";
+import CoursePreviewModal from "./CoursePreviewModal";
 
 const courses = [
   {
@@ -87,6 +89,7 @@ const courses = [
 const categories = ["Todos", "Desarrollo Web", "Data Science", "Diseño", "Marketing", "IA", "Finanzas"];
 
 const CourseCatalog = () => {
+  const [previewCourse, setPreviewCourse] = useState<any>(null);
   return (
     <section id="cursos" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -154,7 +157,14 @@ const CourseCatalog = () => {
                     </Badge>
                   </div>
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button size="sm" className="bg-white/20 backdrop-blur-sm border-white text-white hover:bg-white hover:text-primary">
+                    <Button 
+                      size="sm" 
+                      className="bg-white/20 backdrop-blur-sm border-white text-white hover:bg-white hover:text-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setPreviewCourse(course);
+                      }}
+                    >
                       <Play className="h-4 w-4 mr-2" />
                       Vista previa
                     </Button>
@@ -205,6 +215,12 @@ const CourseCatalog = () => {
             </Button>
           </a>
         </div>
+        
+        <CoursePreviewModal
+          isOpen={!!previewCourse}
+          onClose={() => setPreviewCourse(null)}
+          course={previewCourse}
+        />
       </div>
     </section>
   );
