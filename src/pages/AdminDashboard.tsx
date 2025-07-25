@@ -343,10 +343,10 @@ const AdminDashboard = () => {
                 <div className="flex items-center justify-between">
                   <CardTitle>Gestión de Usuarios</CardTitle>
                   <div className="flex items-center space-x-2">
-                    <Button variant="outline" size="sm">
-                      <Download className="h-4 w-4 mr-2" />
-                      Exportar
-                    </Button>
+                <Button variant="outline" size="sm" onClick={() => navigate("/admin/users")}>
+                  <Download className="h-4 w-4 mr-2" />
+                  Gestionar Usuarios
+                </Button>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
