@@ -32,7 +32,7 @@ const courseData = {
     rating: 4.8,
     level: "Intermedio",
     category: "Programación",
-    price: "Incluido en suscripción",
+    included: true,
     objectives: [
       "Dominar las características de ES6+ incluyendo arrow functions, destructuring y template literals",
       "Implementar async/await y promises para programación asíncrona",

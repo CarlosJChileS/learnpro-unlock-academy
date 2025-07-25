@@ -21,7 +21,7 @@ const courses = [
     rating: 4.8,
     level: "Intermedio",
     category: "Programación",
-    price: "Incluido en suscripción"
+    included: true
   },
   {
     id: 2,
@@ -34,7 +34,7 @@ const courses = [
     rating: 4.9,
     level: "Avanzado",
     category: "Frontend",
-    price: "Incluido en suscripción"
+    included: true
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ const courses = [
     rating: 4.7,
     level: "Intermedio",
     category: "Backend",
-    price: "Incluido en suscripción"
+    included: true
   },
   {
     id: 4,
@@ -60,7 +60,7 @@ const courses = [
     rating: 4.9,
     level: "Intermedio",
     category: "Data Science",
-    price: "Incluido en suscripción"
+    included: true
   },
   {
     id: 5,
@@ -73,7 +73,7 @@ const courses = [
     rating: 4.6,
     level: "Principiante",
     category: "Diseño",
-    price: "Incluido en suscripción"
+    included: true
   },
   {
     id: 6,
@@ -86,11 +86,37 @@ const courses = [
     rating: 4.8,
     level: "Avanzado",
     category: "DevOps",
-    price: "Incluido en suscripción"
+    included: true
+  },
+  {
+    id: 7,
+    title: "Machine Learning con TensorFlow",
+    description: "Construye modelos de IA y deep learning desde cero hasta producción.",
+    image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=800&h=400&fit=crop",
+    instructor: "Dr. Patricia Ruiz",
+    duration: "22 horas",
+    students: 1890,
+    rating: 4.9,
+    level: "Avanzado",
+    category: "IA/ML",
+    included: true
+  },
+  {
+    id: 8,
+    title: "Ciberseguridad Ética",
+    description: "Aprende hacking ético, pentesting y seguridad informática para proteger sistemas.",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=400&fit=crop",
+    instructor: "Carlos Segura",
+    duration: "20 horas",
+    students: 1320,
+    rating: 4.7,
+    level: "Avanzado",
+    category: "Seguridad",
+    included: true
   }
 ];
 
-const categories = ["Todas", "Programación", "Frontend", "Backend", "Data Science", "Diseño", "DevOps"];
+const categories = ["Todas", "Programación", "Frontend", "Backend", "Data Science", "Diseño", "DevOps", "IA/ML", "Seguridad"];
 const levels = ["Todos", "Principiante", "Intermedio", "Avanzado"];
 
 const Courses = () => {
@@ -117,9 +143,20 @@ const Courses = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
             Explora Nuestros Cursos
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Descubre una amplia variedad de cursos diseñados para llevar tus habilidades al siguiente nivel
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
+            Accede a todos nuestros cursos premium con cualquier plan de suscripción
           </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-sm px-3 py-1">
+              ✅ Todos los cursos incluidos
+            </Badge>
+            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-sm px-3 py-1">
+              🔄 Contenido actualizado mensualmente
+            </Badge>
+            <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200 text-sm px-3 py-1">
+              🎓 Certificados verificados
+            </Badge>
+          </div>
         </div>
 
         {/* Filters Section */}

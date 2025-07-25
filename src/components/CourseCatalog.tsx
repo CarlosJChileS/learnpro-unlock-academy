@@ -15,7 +15,7 @@ const courses = [
     rating: 4.8,
     level: "Intermedio",
     category: "Desarrollo Web",
-    price: "Premium"
+    included: true
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const courses = [
     rating: 4.9,
     level: "Avanzado",
     category: "Data Science",
-    price: "Premium"
+    included: true
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const courses = [
     rating: 4.7,
     level: "Principiante",
     category: "Diseño",
-    price: "Básico"
+    included: true
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ const courses = [
     rating: 4.6,
     level: "Intermedio",
     category: "Marketing",
-    price: "Premium"
+    included: true
   },
   {
     id: 5,
@@ -67,7 +67,7 @@ const courses = [
     rating: 4.9,
     level: "Avanzado",
     category: "IA",
-    price: "Premium"
+    included: true
   },
   {
     id: 6,
@@ -80,7 +80,7 @@ const courses = [
     rating: 4.5,
     level: "Principiante",
     category: "Finanzas",
-    price: "Básico"
+    included: true
   }
 ];
 
@@ -95,8 +95,13 @@ const CourseCatalog = () => {
             Catálogo de Cursos
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Descubre nuestra amplia selección de cursos diseñados por expertos de la industria
+            Accede a todos nuestros cursos premium con cualquier plan de suscripción
           </p>
+          <div className="mt-6">
+            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-lg px-4 py-2">
+              🎯 Todos los cursos incluidos en tu suscripción
+            </Badge>
+          </div>
         </div>
 
         {/* Category Filter */}
@@ -132,11 +137,9 @@ const CourseCatalog = () => {
                   <div className="absolute top-4 right-4">
                     <Badge 
                       variant="outline" 
-                      className={`border-white text-white ${
-                        course.price === "Premium" ? "bg-accent/80" : "bg-primary/80"
-                      }`}
+                      className="border-white text-white bg-green-600/80"
                     >
-                      {course.price}
+                      Incluido
                     </Badge>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4">
