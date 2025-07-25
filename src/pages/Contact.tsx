@@ -79,116 +79,116 @@ const Contact = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="grid md:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Envíanos un mensaje</CardTitle>
-                <CardDescription>
-                  Completa el formulario y te contactaremos lo antes posible
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
+                {/* Contact Form */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Envíanos un mensaje</CardTitle>
+                    <CardDescription>
+                      Completa el formulario y te contactaremos lo antes posible
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div>
+                          <Input
+                            name="name"
+                            placeholder="Tu nombre"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <Input
+                            name="email"
+                            type="email"
+                            placeholder="Tu email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
                       <Input
-                        name="name"
-                        placeholder="Tu nombre"
-                        value={formData.name}
+                        name="subject"
+                        placeholder="Asunto"
+                        value={formData.subject}
                         onChange={handleChange}
                         required
                       />
-                    </div>
-                    <div>
-                      <Input
-                        name="email"
-                        type="email"
-                        placeholder="Tu email"
-                        value={formData.email}
+                      <Textarea
+                        name="message"
+                        placeholder="Tu mensaje"
+                        value={formData.message}
                         onChange={handleChange}
+                        rows={6}
                         required
                       />
-                    </div>
-                  </div>
-                  <Input
-                    name="subject"
-                    placeholder="Asunto"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                  />
-                  <Textarea
-                    name="message"
-                    placeholder="Tu mensaje"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={6}
-                    required
-                  />
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
-                    <Send className="mr-2 h-4 w-4" />
-                    {isSubmitting ? "Enviando..." : "Enviar mensaje"}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                      <Button type="submit" className="w-full" disabled={isSubmitting}>
+                        <Send className="mr-2 h-4 w-4" />
+                        {isSubmitting ? "Enviando..." : "Enviar mensaje"}
+                      </Button>
+                    </form>
+                  </CardContent>
+                </Card>
 
-            {/* Contact Information */}
-            <div className="space-y-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Información de contacto</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="flex items-start space-x-3">
-                    <Mail className="h-5 w-5 text-primary mt-1" />
-                    <div>
-                      <h3 className="font-medium">Email</h3>
-                      <p className="text-muted-foreground">contacto@learnpro.com</p>
-                      <p className="text-muted-foreground">soporte@learnpro.com</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-3">
-                    <Phone className="h-5 w-5 text-primary mt-1" />
-                    <div>
-                      <h3 className="font-medium">Teléfono</h3>
-                      <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                      <p className="text-sm text-muted-foreground">Lun - Vie: 9:00 AM - 6:00 PM</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-3">
-                    <MapPin className="h-5 w-5 text-primary mt-1" />
-                    <div>
-                      <h3 className="font-medium">Dirección</h3>
-                      <p className="text-muted-foreground">
-                        123 Education Street<br />
-                        Learning City, LC 12345<br />
-                        Estados Unidos
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                {/* Contact Information */}
+                <div className="space-y-8">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Información de contacto</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <div className="flex items-start space-x-3">
+                        <Mail className="h-5 w-5 text-primary mt-1" />
+                        <div>
+                          <h3 className="font-medium">Email</h3>
+                          <p className="text-muted-foreground">contacto@learnpro.com</p>
+                          <p className="text-muted-foreground">soporte@learnpro.com</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start space-x-3">
+                        <Phone className="h-5 w-5 text-primary mt-1" />
+                        <div>
+                          <h3 className="font-medium">Teléfono</h3>
+                          <p className="text-muted-foreground">+34 900 123 456</p>
+                          <p className="text-sm text-muted-foreground">Lun - Vie: 9:00 AM - 6:00 PM</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start space-x-3">
+                        <MapPin className="h-5 w-5 text-primary mt-1" />
+                        <div>
+                          <h3 className="font-medium">Dirección</h3>
+                          <p className="text-muted-foreground">
+                            Calle Gran Vía, 123<br />
+                            28013 Madrid, España
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
 
-              {/* FAQ Quick Links */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>¿Necesitas ayuda rápida?</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button variant="outline" className="w-full justify-start">
-                    Preguntas frecuentes
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    Centro de ayuda
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    Soporte técnico
-                  </Button>
-                </CardContent>
-              </Card>
+                  {/* FAQ Quick Links */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>¿Necesitas ayuda rápida?</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <Button variant="outline" className="w-full justify-start">
+                        Preguntas frecuentes
+                      </Button>
+                      <Button variant="outline" className="w-full justify-start">
+                        Centro de ayuda
+                      </Button>
+                      <Button variant="outline" className="w-full justify-start">
+                        Soporte técnico
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             </div>
           </div>
