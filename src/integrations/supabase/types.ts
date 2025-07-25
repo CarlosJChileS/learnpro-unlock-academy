@@ -16,46 +16,109 @@ export type Database = {
     Tables: {
       categories: {
         Row: {
-          id: number
+          created_at: string
+          description: string | null
+          id: string
           name: string
         }
         Insert: {
-          id?: number
+          created_at?: string
+          description?: string | null
+          id?: string
           name: string
         }
         Update: {
-          id?: number
+          created_at?: string
+          description?: string | null
+          id?: string
           name?: string
         }
         Relationships: []
       }
-      courses: {
+      course_enrollments: {
         Row: {
-          category_id: number | null
-          created_at: string | null
-          description: string | null
-          id: number
-          price: number | null
-          status: string | null
-          title: string
+          completed_at: string | null
+          course_id: string
+          enrolled_at: string
+          id: string
+          progress_percentage: number | null
+          user_id: string
         }
         Insert: {
-          category_id?: number | null
-          created_at?: string | null
-          description?: string | null
-          id?: number
-          price?: number | null
-          status?: string | null
-          title: string
+          completed_at?: string | null
+          course_id: string
+          enrolled_at?: string
+          id?: string
+          progress_percentage?: number | null
+          user_id: string
         }
         Update: {
-          category_id?: number | null
-          created_at?: string | null
+          completed_at?: string | null
+          course_id?: string
+          enrolled_at?: string
+          id?: string
+          progress_percentage?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_enrollments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "course_enrollments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      courses: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          description: string | null
+          duration_hours: number | null
+          id: string
+          instructor_id: string
+          is_published: boolean
+          level: string | null
+          price: number | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
           description?: string | null
-          id?: number
+          duration_hours?: number | null
+          id?: string
+          instructor_id: string
+          is_published?: boolean
+          level?: string | null
           price?: number | null
-          status?: string | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          duration_hours?: number | null
+          id?: string
+          instructor_id?: string
+          is_published?: boolean
+          level?: string | null
+          price?: number | null
+          thumbnail_url?: string | null
           title?: string
+          updated_at?: string
         }
         Relationships: [
           {
@@ -65,29 +128,109 @@ export type Database = {
             referencedRelation: "categories"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "courses_instructor_id_fkey"
+            columns: ["instructor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      lesson_progress: {
+        Row: {
+          completed_at: string | null
+          course_id: string
+          created_at: string
+          id: string
+          is_completed: boolean
+          lesson_id: string
+          updated_at: string
+          user_id: string
+          watch_time_seconds: number | null
+        }
+        Insert: {
+          completed_at?: string | null
+          course_id: string
+          created_at?: string
+          id?: string
+          is_completed?: boolean
+          lesson_id: string
+          updated_at?: string
+          user_id: string
+          watch_time_seconds?: number | null
+        }
+        Update: {
+          completed_at?: string | null
+          course_id?: string
+          created_at?: string
+          id?: string
+          is_completed?: boolean
+          lesson_id?: string
+          updated_at?: string
+          user_id?: string
+          watch_time_seconds?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_progress_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lesson_progress_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lesson_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
         ]
       }
       lessons: {
         Row: {
-          content_url: string | null
-          course_id: number
-          id: number
-          lesson_order: number | null
+          course_id: string
+          created_at: string
+          description: string | null
+          duration_minutes: number | null
+          id: string
+          is_free: boolean
+          order_index: number
           title: string
+          updated_at: string
+          video_url: string | null
         }
         Insert: {
-          content_url?: string | null
-          course_id: number
-          id?: number
-          lesson_order?: number | null
+          course_id: string
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_free?: boolean
+          order_index: number
           title: string
+          updated_at?: string
+          video_url?: string | null
         }
         Update: {
-          content_url?: string | null
-          course_id?: number
-          id?: number
-          lesson_order?: number | null
+          course_id?: string
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_free?: boolean
+          order_index?: number
           title?: string
+          updated_at?: string
+          video_url?: string | null
         }
         Relationships: [
           {
@@ -99,217 +242,176 @@ export type Database = {
           },
         ]
       }
-      notifications: {
-        Row: {
-          created_at: string | null
-          id: number
-          is_read: boolean | null
-          message: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: number
-          is_read?: boolean | null
-          message: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: number
-          is_read?: boolean | null
-          message?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "notifications_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       payments: {
         Row: {
           amount: number
-          currency: string | null
-          id: number
-          paid_at: string | null
-          provider: string | null
+          created_at: string
+          currency: string
+          id: string
+          payment_method: string
+          payment_provider: string
+          provider_payment_id: string | null
           status: string | null
-          subscription_id: number
+          subscription_id: string | null
+          updated_at: string
+          user_id: string
         }
         Insert: {
           amount: number
-          currency?: string | null
-          id?: number
-          paid_at?: string | null
-          provider?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          payment_method: string
+          payment_provider: string
+          provider_payment_id?: string | null
           status?: string | null
-          subscription_id: number
+          subscription_id?: string | null
+          updated_at?: string
+          user_id: string
         }
         Update: {
           amount?: number
-          currency?: string | null
-          id?: number
-          paid_at?: string | null
-          provider?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          payment_method?: string
+          payment_provider?: string
+          provider_payment_id?: string | null
           status?: string | null
-          subscription_id?: number
+          subscription_id?: string | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "payments_subscription_id_fkey"
             columns: ["subscription_id"]
             isOneToOne: false
-            referencedRelation: "subscriptions"
+            referencedRelation: "user_subscriptions"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
           },
         ]
       }
-      plans: {
+      profiles: {
         Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      subscription_plans: {
+        Row: {
+          created_at: string
           description: string | null
-          id: number
+          duration_months: number
+          features: Json | null
+          id: string
+          is_active: boolean
           name: string
-          period: unknown
           price: number
         }
         Insert: {
+          created_at?: string
           description?: string | null
-          id?: number
+          duration_months: number
+          features?: Json | null
+          id?: string
+          is_active?: boolean
           name: string
-          period: unknown
           price: number
         }
         Update: {
+          created_at?: string
           description?: string | null
-          id?: number
+          duration_months?: number
+          features?: Json | null
+          id?: string
+          is_active?: boolean
           name?: string
-          period?: unknown
           price?: number
         }
         Relationships: []
       }
-      progress: {
+      user_subscriptions: {
         Row: {
-          completed: boolean | null
-          completed_at: string | null
-          course_id: number
-          id: number
-          lesson_id: number | null
+          created_at: string
+          ends_at: string
+          id: string
+          plan_id: string
+          starts_at: string
+          status: string | null
+          updated_at: string
           user_id: string
         }
         Insert: {
-          completed?: boolean | null
-          completed_at?: string | null
-          course_id: number
-          id?: number
-          lesson_id?: number | null
+          created_at?: string
+          ends_at: string
+          id?: string
+          plan_id: string
+          starts_at?: string
+          status?: string | null
+          updated_at?: string
           user_id: string
         }
         Update: {
-          completed?: boolean | null
-          completed_at?: string | null
-          course_id?: number
-          id?: number
-          lesson_id?: number | null
+          created_at?: string
+          ends_at?: string
+          id?: string
+          plan_id?: string
+          starts_at?: string
+          status?: string | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "progress_course_id_fkey"
-            columns: ["course_id"]
-            isOneToOne: false
-            referencedRelation: "courses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "progress_lesson_id_fkey"
-            columns: ["lesson_id"]
-            isOneToOne: false
-            referencedRelation: "lessons"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "progress_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      subscriptions: {
-        Row: {
-          end_date: string | null
-          id: number
-          plan_id: number
-          start_date: string
-          status: string
-          user_id: string
-        }
-        Insert: {
-          end_date?: string | null
-          id?: number
-          plan_id: number
-          start_date?: string
-          status?: string
-          user_id: string
-        }
-        Update: {
-          end_date?: string | null
-          id?: number
-          plan_id?: number
-          start_date?: string
-          status?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "subscriptions_plan_id_fkey"
+            foreignKeyName: "user_subscriptions_plan_id_fkey"
             columns: ["plan_id"]
             isOneToOne: false
-            referencedRelation: "plans"
+            referencedRelation: "subscription_plans"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "subscriptions_user_id_fkey"
+            foreignKeyName: "user_subscriptions_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
           },
         ]
-      }
-      users: {
-        Row: {
-          created_at: string | null
-          email: string
-          full_name: string | null
-          id: string
-          password_hash: string
-          role: string
-        }
-        Insert: {
-          created_at?: string | null
-          email: string
-          full_name?: string | null
-          id?: string
-          password_hash: string
-          role?: string
-        }
-        Update: {
-          created_at?: string | null
-          email?: string
-          full_name?: string | null
-          id?: string
-          password_hash?: string
-          role?: string
-        }
-        Relationships: []
       }
     }
     Views: {
