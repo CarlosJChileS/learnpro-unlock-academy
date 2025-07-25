@@ -1,41 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Menu, Search, User, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { User as SupabaseUser, Session } from "@supabase/supabase-js";
+import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
-  const { toast } = useToast();
-
-  useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-      }
-    );
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    toast({
-      title: "Sesión cerrada",
-      description: "Has cerrado sesión correctamente.",
-    });
+    await signOut();
     navigate("/");
   };
 
@@ -87,7 +62,7 @@ const Header = () => {
             {user ? (
               <div className="hidden md:flex items-center space-x-3">
                 <span className="text-sm text-muted-foreground">
-                  Hola, {user.user_metadata?.name || user.email}
+                  Hola, {profile?.full_name || user.email}
                 </span>
                 <Button 
                   variant="outline" 
