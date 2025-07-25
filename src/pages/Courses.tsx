@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Clock, Users, Star, Search, Filter } from "lucide-react";
+import { Clock, Users, Star, Search, Filter, Play } from "lucide-react";
 
 const courses = [
   {
@@ -138,24 +138,29 @@ const Courses = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-            Explora Nuestros Cursos
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
-            Accede a todos nuestros cursos premium con cualquier plan de suscripción
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-sm px-3 py-1">
-              ✅ Todos los cursos incluidos
-            </Badge>
-            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-sm px-3 py-1">
-              🔄 Contenido actualizado mensualmente
-            </Badge>
-            <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200 text-sm px-3 py-1">
-              🎓 Certificados verificados
-            </Badge>
+        {/* Header Section - Udemy style */}
+        <div className="bg-gray-900 text-white p-8 rounded-lg mb-8">
+          <div className="max-w-4xl">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+              Un amplio catálogo de cursos
+            </h1>
+            <p className="text-lg text-gray-300 mb-6">
+              Elige entre más de 1,000 cursos con contenido actualizado. Todos incluidos en tu suscripción.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Badge className="bg-green-600 text-white px-3 py-1">
+                ✅ Todos los cursos incluidos
+              </Badge>
+              <Badge className="bg-blue-600 text-white px-3 py-1">
+                📱 Acceso móvil
+              </Badge>
+              <Badge className="bg-purple-600 text-white px-3 py-1">
+                🎓 Certificados al completar
+              </Badge>
+              <Badge className="bg-orange-600 text-white px-3 py-1">
+                📺 Contenido offline
+              </Badge>
+            </div>
           </div>
         </div>
 
@@ -208,70 +213,83 @@ const Courses = () => {
           </p>
         </div>
 
-        {/* Courses Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {/* Courses Grid - Udemy style */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
           {filteredCourses.map((course) => (
-            <Card key={course.id} className="group hover:shadow-glow transition-all duration-300 overflow-hidden">
+            <Card key={course.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200 bg-white">
               <div className="relative overflow-hidden">
                 <img
                   src={course.image}
                   alt={course.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-4 left-4">
-                  <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm">
-                    {course.category}
+                {/* Subscription badge */}
+                <div className="absolute top-3 left-3">
+                  <Badge className="bg-green-600 text-white text-xs font-medium">
+                    ✅ Incluido
                   </Badge>
                 </div>
-                <div className="absolute top-4 right-4">
+                {/* Level badge */}
+                <div className="absolute top-3 right-3">
                   <Badge 
-                    variant="outline" 
-                    className={`bg-background/80 backdrop-blur-sm ${
-                      course.level === 'Principiante' ? 'border-green-500 text-green-600' :
-                      course.level === 'Intermedio' ? 'border-yellow-500 text-yellow-600' :
-                      'border-red-500 text-red-600'
+                    variant="secondary" 
+                    className={`text-xs font-medium ${
+                      course.level === 'Principiante' ? 'bg-green-100 text-green-800' :
+                      course.level === 'Intermedio' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'
                     }`}
                   >
                     {course.level}
                   </Badge>
                 </div>
+                
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                  <Button size="sm" className="bg-white text-gray-900 hover:bg-gray-100">
+                    <Play className="w-4 h-4 mr-1" />
+                    Vista previa
+                  </Button>
+                </div>
               </div>
               
-              <CardHeader>
-                <CardTitle className="line-clamp-2 group-hover:text-primary transition-colors">
-                  {course.title}
-                </CardTitle>
-                <CardDescription className="line-clamp-2">
-                  {course.description}
-                </CardDescription>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                <div className="text-sm text-muted-foreground">
-                  Por {course.instructor}
-                </div>
-                
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <div className="flex items-center space-x-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{course.duration}</span>
+              <CardContent className="p-4">
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900 line-clamp-2 text-base leading-tight group-hover:text-purple-600 transition-colors">
+                    {course.title}
+                  </h3>
+                  
+                  <p className="text-sm text-gray-600 line-clamp-2">
+                    {course.description}
+                  </p>
+                  
+                  <div className="text-sm text-gray-500">
+                    {course.instructor}
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <Users className="h-4 w-4" />
-                    <span>{course.students.toLocaleString()}</span>
+                  
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-1">
+                        <Clock className="h-3 w-3" />
+                        <span>{course.duration}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Users className="h-3 w-3" />
+                        <span>{course.students.toLocaleString()}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                      <span className="font-medium">{course.rating}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span>{course.rating}</span>
+                  
+                  <div className="pt-2 border-t border-gray-100">
+                    <Link to={`/courses/${course.id}`}>
+                      <Button className="w-full bg-gray-900 hover:bg-gray-800 text-white text-sm py-2">
+                        Ir al curso
+                      </Button>
+                    </Link>
                   </div>
-                </div>
-                
-                <div className="pt-2">
-                  <Link to={`/courses/${course.id}`}>
-                    <Button className="w-full bg-gradient-primary hover:opacity-90 transition-opacity">
-                      Ver Curso
-                    </Button>
-                  </Link>
                 </div>
               </CardContent>
             </Card>

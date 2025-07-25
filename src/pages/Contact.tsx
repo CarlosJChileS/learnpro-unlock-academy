@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { 
+  Mail, Phone, MapPin, Clock, MessageCircle, 
+  Send, CheckCircle2, Headphones, Globe, Users
+} from "lucide-react";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -45,17 +50,35 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">Contactanos</h1>
-            <p className="text-lg text-muted-foreground">
-              ¿Tienes preguntas? Estamos aquí para ayudarte
-            </p>
+      <main>
+        {/* Hero Section - Udemy style */}
+        <section className="bg-gray-900 text-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                ¿Necesitas ayuda?
+              </h1>
+              <p className="text-xl text-gray-300 mb-8">
+                Nuestro equipo de soporte está aquí para ayudarte. Contáctanos y te responderemos lo antes posible.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Badge className="bg-green-600 text-white px-4 py-2">
+                  <CheckCircle2 className="w-4 h-4 mr-2" />
+                  Respuesta en 24h
+                </Badge>
+                <Badge className="bg-blue-600 text-white px-4 py-2">
+                  <Headphones className="w-4 h-4 mr-2" />
+                  Soporte dedicado
+                </Badge>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="grid md:grid-cols-2 gap-12">
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Form */}
             <Card>
               <CardHeader>
@@ -166,9 +189,10 @@ const Contact = () => {
                   </Button>
                 </CardContent>
               </Card>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </main>
 
       <Footer />
