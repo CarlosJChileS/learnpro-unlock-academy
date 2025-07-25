@@ -9,31 +9,60 @@ const plans = [
     id: "monthly",
     name: "Plan Mensual",
     description: "Perfecto para comenzar tu viaje de aprendizaje",
-    price: 29,
+    price: 9.99,
     period: "/mes",
     icon: Star,
     popular: false,
     features: [
       "Acceso a todos los cursos",
       "Certificados de finalización",
-      "Soporte prioritario"
+      "Soporte básico",
+      "Acceso móvil y web",
+      "Progreso sincronizado"
     ]
   },
   {
     id: "annual",
     name: "Plan Anual",
     description: "La opción más popular para profesionales",
-    price: 290,
-    originalPrice: 348,
+    price: 79.99,
+    originalPrice: 119.88,
     period: "/año",
-    savings: "17% de descuento",
+    savings: "33% de descuento",
     icon: Zap,
     popular: true,
     features: [
       "Acceso a todos los cursos",
       "Certificados de finalización", 
       "Soporte prioritario",
-      "Contenido exclusivo"
+      "Contenido exclusivo",
+      "Acceso móvil y web",
+      "Progreso sincronizado",
+      "Descargas offline",
+      "Comunidad exclusiva"
+    ]
+  },
+  {
+    id: "lifetime",
+    name: "Plan de por Vida",
+    description: "Acceso permanente a toda la plataforma",
+    price: 299.99,
+    originalPrice: 499.99,
+    period: "pago único",
+    savings: "40% de descuento",
+    icon: Crown,
+    popular: false,
+    features: [
+      "Acceso de por vida a todos los cursos",
+      "Certificados de finalización",
+      "Soporte VIP",
+      "Contenido exclusivo y futuro",
+      "Acceso móvil y web",
+      "Progreso sincronizado",
+      "Descargas offline",
+      "Comunidad exclusiva",
+      "Sesiones 1:1 con mentores",
+      "Acceso beta a nuevas funciones"
     ]
   }
 ];
@@ -66,12 +95,12 @@ const PricingPlans = () => {
             </div>
             <span className="text-foreground font-medium">Anual</span>
             <Badge variant="default" className="bg-gradient-primary">
-              2 meses gratis
+              Ahorra hasta 40%
             </Badge>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => {
             const IconComponent = plan.icon;
             return (
@@ -107,7 +136,7 @@ const PricingPlans = () => {
                   <div className="mt-6">
                     <div className="flex items-baseline justify-center">
                       <span className="text-4xl font-bold text-foreground">
-                        €{plan.price}
+                        ${plan.price}
                       </span>
                       <span className="text-muted-foreground ml-1">{plan.period}</span>
                     </div>
@@ -118,7 +147,7 @@ const PricingPlans = () => {
                     )}
                     {'originalPrice' in plan && plan.originalPrice && (
                       <div className="text-sm text-muted-foreground mt-2 line-through">
-                        €{plan.originalPrice}/año
+                        ${plan.originalPrice}{plan.period === "/año" ? "/año" : ""}
                       </div>
                     )}
                   </div>

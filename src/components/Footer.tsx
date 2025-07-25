@@ -21,13 +21,13 @@ const Footer = () => {
               <Button variant="outline" size="sm" className="hover-scale">
                 <Facebook className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-background hover:bg-background/10">
+              <Button variant="outline" size="sm" className="hover-scale">
                 <Twitter className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-background hover:bg-background/10">
+              <Button variant="outline" size="sm" className="hover-scale">
                 <Instagram className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-background hover:bg-background/10">
+              <Button variant="outline" size="sm" className="hover-scale">
                 <Linkedin className="h-5 w-5" />
               </Button>
             </div>
@@ -37,29 +37,29 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-6">Enlaces Rápidos</h3>
             <ul className="space-y-3">
-              <li>
-                <a href="#cursos" className="text-background/80 hover:text-background transition-colors">
+               <li>
+                <a href="/courses" className="text-muted-foreground hover:text-foreground transition-colors">
                   Catálogo de Cursos
                 </a>
               </li>
               <li>
-                <a href="#planes" className="text-background/80 hover:text-background transition-colors">
+                <a href="/subscription" className="text-muted-foreground hover:text-foreground transition-colors">
                   Planes y Precios
                 </a>
               </li>
               <li>
-                <a href="#nosotros" className="text-background/80 hover:text-background transition-colors">
+                <a href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
                   Sobre Nosotros
                 </a>
               </li>
               <li>
-                <a href="#instructores" className="text-background/80 hover:text-background transition-colors">
-                  Instructores
+                <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Contacto
                 </a>
               </li>
               <li>
-                <a href="#blog" className="text-background/80 hover:text-background transition-colors">
-                  Blog
+                <a href="/faq" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Preguntas Frecuentes
                 </a>
               </li>
             </ul>
@@ -70,28 +70,28 @@ const Footer = () => {
             <h3 className="font-semibold text-lg mb-6">Categorías</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-background/80 hover:text-background transition-colors">
+                <a href="/courses?category=Programación" className="text-muted-foreground hover:text-foreground transition-colors">
                   Desarrollo Web
                 </a>
               </li>
               <li>
-                <a href="#" className="text-background/80 hover:text-background transition-colors">
+                <a href="/courses?category=Data Science" className="text-muted-foreground hover:text-foreground transition-colors">
                   Data Science
                 </a>
               </li>
               <li>
-                <a href="#" className="text-background/80 hover:text-background transition-colors">
+                <a href="/courses?category=Diseño" className="text-muted-foreground hover:text-foreground transition-colors">
                   Diseño UX/UI
                 </a>
               </li>
               <li>
-                <a href="#" className="text-background/80 hover:text-background transition-colors">
-                  Marketing Digital
+                <a href="/courses?category=IA/ML" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Machine Learning
                 </a>
               </li>
               <li>
-                <a href="#" className="text-background/80 hover:text-background transition-colors">
-                  Inteligencia Artificial
+                <a href="/courses?category=DevOps" className="text-muted-foreground hover:text-foreground transition-colors">
+                  DevOps
                 </a>
               </li>
             </ul>
@@ -102,24 +102,24 @@ const Footer = () => {
             <h3 className="font-semibold text-lg mb-6">Contacto</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <Mail className="h-5 w-5 text-background/60 mt-1" />
+                <Mail className="h-5 w-5 text-muted-foreground mt-1" />
                 <div>
-                  <p className="text-background/80">soporte@learnpro.es</p>
-                  <p className="text-background/60 text-sm">Soporte general</p>
+                  <p className="text-foreground">soporte@learnpro.com</p>
+                  <p className="text-muted-foreground text-sm">Soporte general</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <Phone className="h-5 w-5 text-background/60 mt-1" />
+                <Phone className="h-5 w-5 text-muted-foreground mt-1" />
                 <div>
-                  <p className="text-background/80">+34 900 123 456</p>
-                  <p className="text-background/60 text-sm">Lun-Vie 9:00-18:00</p>
+                  <p className="text-foreground">+1 (555) 123-4567</p>
+                  <p className="text-muted-foreground text-sm">Lun-Vie 9:00-18:00 EST</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-background/60 mt-1" />
+                <MapPin className="h-5 w-5 text-muted-foreground mt-1" />
                 <div>
-                  <p className="text-background/80">Madrid, España</p>
-                  <p className="text-background/60 text-sm">Oficina principal</p>
+                  <p className="text-foreground">San Francisco, CA</p>
+                  <p className="text-muted-foreground text-sm">Oficina principal</p>
                 </div>
               </div>
             </div>
@@ -127,17 +127,17 @@ const Footer = () => {
         </div>
 
         {/* Newsletter */}
-        <div className="border-t border-background/20 pt-8 mb-8">
+        <div className="border-t border-border pt-8 mb-8">
           <div className="max-w-md mx-auto text-center">
             <h3 className="font-semibold text-lg mb-4">Mantente Actualizado</h3>
-            <p className="text-background/80 mb-6">
+            <p className="text-muted-foreground mb-6">
               Recibe las últimas novedades sobre cursos y ofertas especiales
             </p>
             <div className="flex gap-2">
               <input
                 type="email"
                 placeholder="Tu email"
-                className="flex-1 px-4 py-2 rounded-lg bg-background/10 border border-background/20 text-background placeholder:text-background/60 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="flex-1 px-4 py-2 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <Button className="bg-primary hover:bg-primary/90">
                 Suscribirse
@@ -147,19 +147,19 @@ const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-background/20 pt-8">
+        <div className="border-t border-border pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-background/60 text-sm">
+            <div className="text-muted-foreground text-sm">
               © 2024 LearnPro. Todos los derechos reservados.
             </div>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-background/60 hover:text-background transition-colors">
+              <a href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
                 Términos de Servicio
               </a>
-              <a href="#" className="text-background/60 hover:text-background transition-colors">
+              <a href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
                 Política de Privacidad
               </a>
-              <a href="#" className="text-background/60 hover:text-background transition-colors">
+              <a href="/cookies" className="text-muted-foreground hover:text-foreground transition-colors">
                 Cookies
               </a>
             </div>
