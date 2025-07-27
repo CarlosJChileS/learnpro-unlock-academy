@@ -22,6 +22,9 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminCourseEditor from "./pages/AdminCourseEditor";
 import AdminUsers from "./pages/AdminUsers";
+import ExamPage from "./pages/ExamPage";
+import ExamResults from "./pages/ExamResults";
+import CertificateView from "./pages/CertificateView";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -72,6 +75,9 @@ const App = () => (
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/courses/:id" element={<AdminCourseEditor />} />
               <Route path="/admin/users" element={<AdminUsers />} />
+              <Route path="/exam/:examId" element={<ExamPage />} />
+              <Route path="/exam-results/:attemptId" element={<ExamResults />} />
+              <Route path="/certificate/:certificateNumber" element={<CertificateView />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
