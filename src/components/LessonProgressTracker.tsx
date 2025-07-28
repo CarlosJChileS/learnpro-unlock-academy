@@ -39,14 +39,18 @@ const LessonProgressTracker: React.FC<LessonProgressTrackerProps> = ({
 
   const loadProgress = async () => {
     try {
-      // Mock progress loading - would connect to database
-      const mockProgress = {
-        watch_time_seconds: 0,
-        is_completed: false
-      };
-      
-      setWatchTime(mockProgress.watch_time_seconds);
-      setIsCompleted(mockProgress.is_completed);
+      const { data, error } = await supabase
+        .from('lesson_progress')
+        .select('watch_time_seconds, is_completed')
+        .eq('user_id', user?.id)
+        .eq('lesson_id', lessonId)
+        .eq('course_id', courseId)
+        .maybeSingle();
+
+      if (data) {
+        setWatchTime(data.watch_time_seconds || 0);
+        setIsCompleted(data.is_completed || false);
+      }
     } catch (error) {
       console.error('Error loading progress:', error);
     } finally {
@@ -58,7 +62,17 @@ const LessonProgressTracker: React.FC<LessonProgressTrackerProps> = ({
     if (!user) return;
 
     try {
-      // Mock progress update - would connect to database
+      const { data, error } = await supabase.functions.invoke('lesson-progress', {
+        body: {
+          lesson_id: lessonId,
+          course_id: courseId,
+          watch_time_seconds: watchTime,
+          is_completed: completed
+        }
+      });
+
+      if (error) throw error;
+
       if (completed && !isCompleted) {
         setIsCompleted(true);
         toast({
@@ -66,9 +80,9 @@ const LessonProgressTracker: React.FC<LessonProgressTrackerProps> = ({
           description: "Has marcado esta lección como completada. ¡Sigue así!"
         });
         
-        // Calculate course progress
-        const courseProgress = await calculateCourseProgress();
-        onProgressUpdate?.(courseProgress);
+        if (data?.course_progress) {
+          onProgressUpdate?.(data.course_progress);
+        }
       }
     } catch (error) {
       console.error('Error updating progress:', error);
@@ -77,8 +91,14 @@ const LessonProgressTracker: React.FC<LessonProgressTrackerProps> = ({
 
   const calculateCourseProgress = async (): Promise<number> => {
     try {
-      // Mock course progress calculation - would use database function
-      return 75; // Mock 75% progress
+      const { data, error } = await supabase
+        .from('course_enrollments')
+        .select('progress_percentage')
+        .eq('user_id', user?.id)
+        .eq('course_id', courseId)
+        .single();
+
+      return data?.progress_percentage || 0;
     } catch (error) {
       console.error('Error calculating course progress:', error);
       return 0;
@@ -118,10 +138,17 @@ export const useLessonProgress = (lessonId: string, courseId: string) => {
 
   const loadProgress = async () => {
     try {
-      // Mock progress loading
+      const { data, error } = await supabase
+        .from('lesson_progress')
+        .select('watch_time_seconds, is_completed')
+        .eq('user_id', user?.id)
+        .eq('lesson_id', lessonId)
+        .eq('course_id', courseId)
+        .maybeSingle();
+
       setProgress({
-        watchTime: 0,
-        isCompleted: false,
+        watchTime: data?.watch_time_seconds || 0,
+        isCompleted: data?.is_completed || false,
         loading: false
       });
     } catch (error) {
@@ -134,7 +161,17 @@ export const useLessonProgress = (lessonId: string, courseId: string) => {
     if (!user) return;
 
     try {
-      // Mock progress update
+      const { error } = await supabase.functions.invoke('lesson-progress', {
+        body: {
+          lesson_id: lessonId,
+          course_id: courseId,
+          watch_time_seconds: progress.watchTime,
+          is_completed: true
+        }
+      });
+
+      if (error) throw error;
+      
       setProgress(prev => ({ ...prev, isCompleted: true }));
       return true;
     } catch (error) {
@@ -147,7 +184,17 @@ export const useLessonProgress = (lessonId: string, courseId: string) => {
     if (!user) return;
 
     try {
-      // Mock watch time update
+      const { error } = await supabase.functions.invoke('lesson-progress', {
+        body: {
+          lesson_id: lessonId,
+          course_id: courseId,
+          watch_time_seconds: seconds,
+          is_completed: progress.isCompleted
+        }
+      });
+
+      if (error) throw error;
+      
       setProgress(prev => ({ ...prev, watchTime: seconds }));
     } catch (error) {
       console.error('Error updating watch time:', error);

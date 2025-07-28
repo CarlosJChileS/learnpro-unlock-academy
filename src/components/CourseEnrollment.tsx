@@ -35,9 +35,14 @@ const CourseEnrollment: React.FC<CourseEnrollmentProps> = ({
 
   const checkEnrollment = async () => {
     try {
-      // Mock enrollment check - would connect to database
-      // For now, assume user is enrolled if they have a subscription
-      const enrolled = subscription.subscribed;
+      const { data, error } = await supabase
+        .from('course_enrollments')
+        .select('id')
+        .eq('user_id', user?.id)
+        .eq('course_id', courseId)
+        .single();
+
+      const enrolled = !error && !!data;
       setIsEnrolled(enrolled);
       onEnrollmentChange?.(enrolled);
     } catch (error) {
@@ -79,8 +84,11 @@ const CourseEnrollment: React.FC<CourseEnrollmentProps> = ({
     setIsEnrolling(true);
 
     try {
-      // Mock enrollment - would connect to database
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const { data, error } = await supabase.functions.invoke('course-enrollment', {
+        body: { course_id: courseId }
+      });
+
+      if (error) throw error;
       
       setIsEnrolled(true);
       onEnrollmentChange?.(true);
@@ -89,11 +97,11 @@ const CourseEnrollment: React.FC<CourseEnrollmentProps> = ({
         title: "¡Inscripción exitosa!",
         description: "Ya puedes comenzar a estudiar este curso",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error enrolling:', error);
       toast({
         title: "Error",
-        description: "No se pudo completar la inscripción",
+        description: error.message || "No se pudo completar la inscripción",
         variant: "destructive"
       });
     } finally {
