@@ -121,8 +121,8 @@ const ProgressDashboard = () => {
         enrolled_at: enrollment.enrolled_at,
         completed_at: enrollment.completed_at,
         thumbnail_url: enrollment.courses.thumbnail_url,
-        certificate_id: enrollment.certificates?.[0]?.id || undefined,
-        certificate_number: enrollment.certificates?.[0]?.certificate_number || undefined
+        certificate_id: Array.isArray(enrollment.certificates) ? enrollment.certificates[0]?.id : undefined,
+        certificate_number: Array.isArray(enrollment.certificates) ? enrollment.certificates[0]?.certificate_number : undefined
       })) || [];
       
       setCompletedCourses(formattedCompleted);
@@ -196,7 +196,7 @@ const ProgressDashboard = () => {
                     {stat.total !== "∞" && stat.total !== "" && (
                       <span className="text-sm text-muted-foreground">/{stat.total}</span>
                     )}
-                    {stat.total === "" && stat.value.includes('%') && (
+                    {stat.total === "" && String(stat.value).includes('%') && (
                       <span className="text-sm text-muted-foreground"></span>
                     )}
                   </p>
